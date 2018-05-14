@@ -17,8 +17,6 @@ class Queue {
     // preserves insertion order.
     this.entries_ = new Set();
     this.inProgress_ = 0;
-
-    this.drainCbs_ = new Set();
   }
 
   // Add key value pair for processing.
@@ -30,22 +28,9 @@ class Queue {
     return promise;
   }
 
-  // Register a callback that is invoked every time the queue size changes to 0.
-  // Returns a function that when called cancels the subscription.
-  SubscribeQueueDrain(cb) {
-    this.drainCbs_.add(cb);
-    return () => {
-      this.drainCbs_.delete(cbId);
-    }
-  }
-
   // Returns the current queue size.
   Size() {
     return this.entries_.size;
-  }
-
-  NotifyQueueDrainSubscribers_() {
-    this.entries_.forEach(cb => cb());
   }
   
   FinishSuccessfully_(itVal, res) {

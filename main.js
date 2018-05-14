@@ -20,5 +20,4 @@ lines.forEach(async line => {
     gitRepo = await NodeGit.Clone(gitURL, cloneDir);
   }); 
   await gitRepo.getCommit(oid);
-  await gitRepo.getCommit(oid);
 });
